@@ -59,8 +59,9 @@ module.exports = {
         },
       },
       runtimePlugins: [
+        path.join(__dirname, './runtime-plugin/esm-load-entry.js'),
         path.join(__dirname, './runtime-plugin/retry.js'),
-        path.join(__dirname, './runtime-plugin/fallback.js'),
+        // path.join(__dirname, './runtime-plugin/fallback.js'),
       ],
     }),
   ],
