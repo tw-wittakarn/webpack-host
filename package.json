@@ -1,0 +1,19 @@
+{
+  "name": "webpack-host",
+  "private": true,
+  "scripts": {
+    "build": "pnpm --parallel --filter \"./**\" build",
+    "serve": "pnpm --parallel --filter \"./**\" serve ",
+    "build:remotes": "pnpm --filter \"./remote\"  build",
+    "serve:remotes": "pnpm --filter \"./remote\"  serve",
+    "dev:hosts": "pnpm --filter \"./host\" dev",
+    "stop": "kill-port --port 3000,5001"
+  },
+  "workspaces": [
+    "host",
+    "remote"
+  ],
+  "devDependencies": {
+    "kill-port": "^2.0.1"
+  }
+}
