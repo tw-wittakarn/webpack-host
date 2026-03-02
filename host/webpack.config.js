@@ -1,5 +1,6 @@
 const { ModuleFederationPlugin } = require('@module-federation/enhanced/webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const path = require('path');
 
 /** @type {import('webpack').Configuration} */
@@ -43,6 +44,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin(),
+    new CopyPlugin({ patterns: [{ from: 'sw.js' }] }),
     new ModuleFederationPlugin({
       name: 'webpackHost',
       remotes: {
@@ -67,6 +69,7 @@ module.exports = {
   ],
   devServer: {
     port: 3000,
+    static: [{ directory: __dirname }],
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
