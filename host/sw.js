@@ -1,5 +1,5 @@
 const REMOTE_ORIGIN = 'http://localhost:5001';
-const MAX_RETRIES = 3;
+const MAX_RETRIES = 30;
 
 // Take control immediately on install — no need to wait for a page reload
 self.addEventListener('install', () => self.skipWaiting());
@@ -27,7 +27,7 @@ async function fetchWithRetry(url, attempt) {
       console.error(`[SW] giving up: ${url}`);
       throw err;
     }
-    await new Promise(r => setTimeout(r, 5000 * attempt));
+    await new Promise(r => setTimeout(r, 1000 * attempt));
     return fetchWithRetry(url, attempt + 1);
   }
 }
