@@ -1,5 +1,7 @@
 const { ModuleFederationPlugin } = require('webpack').container;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+const path = require('path');
 
 /** @type {import('webpack').Configuration} */
 module.exports = {
@@ -26,7 +28,7 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        use: ["css-loader"],
+        use: ["style-loader", "css-loader"],
       },
       {
         test: /\.jsx?$/,
@@ -42,11 +44,12 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin(),
+    new CopyPlugin({ patterns: [{ from: 'sw.js' }] }),
     new ModuleFederationPlugin({
       name: 'webpackHost',
       filename: 'remoteEntry.js',
       remotes: {
-        viteRemote: `promise import("http://localhost:5001/assets/remoteEntry.js")`,
+        viteRemote: `promise import("http://localhost:5001/remoteEntry.js")`,
       },
       shared: {
         react: {

@@ -4,6 +4,7 @@ import { federation } from '@module-federation/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: 'http://localhost:5001/',
   plugins: [
     react(),
     federation({
@@ -27,6 +28,5 @@ export default defineConfig({
     modulePreload: false,
     target: 'esnext',
     minify: false,
-    cssCodeSplit: false
   }
 })
