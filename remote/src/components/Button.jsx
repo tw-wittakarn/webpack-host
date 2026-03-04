@@ -3,7 +3,7 @@ import "./Button.css"
 
 import { useState } from "react"
 
-const Button = () => {
+export const Button = () => {
   const [state, setState] = useState(0)
   return (
     <div>
@@ -12,4 +12,4 @@ const Button = () => {
   )
 }
 
-export default Button;
+export default Button

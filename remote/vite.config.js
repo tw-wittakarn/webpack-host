@@ -12,22 +12,21 @@ export default defineConfig({
       exposes: {
         './Button': './src/components/Button'
       },
-      manifest: true,
       shared: {
         react: {
-        singleton: true,
-        eager: true
-      },'react-dom': {
-        singleton: true,
-        eager: true
-      },
-    }
+          singleton: true,
+          eager: true
+        }, 'react-dom': {
+          singleton: true,
+          eager: true
+        },
+      }
     })
   ],
-  base: 'http://localhost:5001/',
   build: {
     modulePreload: false,
     target: 'esnext',
     minify: false,
+    cssCodeSplit: false
   }
 })

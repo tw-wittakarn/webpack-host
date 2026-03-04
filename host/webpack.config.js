@@ -1,7 +1,5 @@
-const { ModuleFederationPlugin } = require('@module-federation/enhanced/webpack');
+const { ModuleFederationPlugin } = require('webpack').container;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
-const path = require('path');
 
 /** @type {import('webpack').Configuration} */
 module.exports = {
@@ -28,7 +26,7 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
+        use: ["css-loader"],
       },
       {
         test: /\.jsx?$/,
@@ -44,32 +42,24 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin(),
-    new CopyPlugin({ patterns: [{ from: 'sw.js' }] }),
     new ModuleFederationPlugin({
       name: 'webpackHost',
+      filename: 'remoteEntry.js',
       remotes: {
-        viteRemote: 'viteRemote@http://localhost:5001/mf-manifest.json'
+        viteRemote: `promise import("http://localhost:5001/assets/remoteEntry.js")`,
       },
       shared: {
         react: {
           singleton: true,
-          eager: true,
         },
         'react-dom': {
           singleton: true,
-          eager: true,
         },
       },
-      runtimePlugins: [
-        path.join(__dirname, './runtime-plugin/esm-load-entry.js'),
-        path.join(__dirname, './runtime-plugin/retry.js'),
-        // path.join(__dirname, './runtime-plugin/fallback.js'),
-      ],
     }),
   ],
   devServer: {
     port: 3000,
-    static: [{ directory: __dirname }],
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
